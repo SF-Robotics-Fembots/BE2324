@@ -3,6 +3,9 @@
     <head>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <link rel = "stylesheet" href="bestyle.css">
+        <!-- linking pyScript to run python functions -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+        <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
         <title>Geneseass Buoyancy Engine</title>
     </head>
 <body>
@@ -35,7 +38,7 @@
     </div>
 
     <div class = "dive_bttn">
-        <button class = "dive_label">DIVE</button>
+        <button py-click = "" class = "dive_label">DIVE</button>
     </div>
 
     <div class = "table">
@@ -78,5 +81,6 @@
         </script>
 
     </div>
+    <script type="py" src="./main.py" config="./pyscript.json"></script>
 </body>
 </html>

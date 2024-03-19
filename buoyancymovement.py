@@ -54,6 +54,9 @@ def be_main():
      be_down()
      be_up()
 
+def be_dive(event):
+     print('running?')
+
 
 #running main function
 be_main()
