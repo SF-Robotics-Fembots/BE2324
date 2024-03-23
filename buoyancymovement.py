@@ -5,8 +5,8 @@ import time
 motordown = 5
 motorup = 6
 switch = 21
-plunger_time = 5
-time_to_bottom = 60
+plunger_time = 60 #~60 seconds to bottom of syinge
+time_to_bottom = 5
 
 #set the modes for the pins
 GPIO.setmode(GPIO.BCM)
@@ -40,9 +40,8 @@ def calibration():
 def be_down():
     plunger_up()
     #not inclusive of the last second
-    for time in range(time_to_bottom):
-            #collect data here
-            time.sleep(1)
+    for descend_time in range(time_to_bottom):
+         time.sleep(1)
 
 def be_up():
      plunger_down()
@@ -51,8 +50,9 @@ def be_up():
 
 def be_main():
      calibration()
-     be_down()
-     be_up()
+     while True:
+          be_down()
+          be_up()
 
 def be_dive(event):
      print('running?')
