@@ -1,12 +1,14 @@
 import RPi.GPIO as GPIO
 import time
+import smbus
+import ms5837
 
 #initializing the variables
 motordown = 5
 motorup = 6
 switch = 21
-plunger_time = 5
-time_to_bottom = 60
+plunger_time = 60 #~60 seconds to bottom of syinge
+time_to_bottom = 5
 
 #set the modes for the pins
 GPIO.setmode(GPIO.BCM)
@@ -20,6 +22,34 @@ GPIO.setup(switch, GPIO.IN)
 #initial them all to low
 GPIO.output(motorup, GPIO.LOW)
 GPIO.output(motordown, GPIO.LOW)
+
+def collect_pressure():
+    #initialize the sensor
+    print("initializing pressure sensor")
+    sensor.init()
+    time.sleep(1)
+    sensor.read(ms5837.OSR_256)
+    sensor.setFluidDensity(ms5837.DENSITY_FRESHWATER)
+    startup_success = 0 #set to false initially
+    while not startup_success:
+        try:
+            startup()
+        except:
+            print("failed startup")
+            pass
+        else:
+            startup_success = 1
+            time.sleep(0.5)
+    while True:
+        try:
+            sensor.read(ms5837.OSR_256)
+        except:
+            print("failed reading")
+            continue #goes back to the try. it's stubborn like that
+        readings = sensor.pressure(ms5837.UNITS_kPa)
+        now = datetime.datetime.now()
+        print(str(readings) + "   " + now.strftime("%H:%M:%S"))
+        break
 
 def plunger_up():
     while GPIO.input(switch) == True:
@@ -40,9 +70,9 @@ def calibration():
 def be_down():
     plunger_up()
     #not inclusive of the last second
-    for time in range(time_to_bottom):
-            #collect data here
-            time.sleep(1)
+    for descend_time in range(time_to_bottom):
+         collect_pressure()
+         time.sleep(1)
 
 def be_up():
      plunger_down()
@@ -51,8 +81,11 @@ def be_up():
 
 def be_main():
      calibration()
-     be_down()
-     be_up()
+     
+
+def be_dive():
+     print('running?')
+     
 
 
 #running main function
