@@ -15,7 +15,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Current Time</title>
    <script>
-   function getCurrentTime() {
+  function getCurrentTime() {
        var now = new Date();
        var current_time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
        document.getElementById("current-time").innerHTML = "Current Time: " + current_time;
@@ -27,16 +27,30 @@
        <p id="current-time"></p>
    </body>
    </html>
-   
-   
     </h1>
-    
         </div>
     </div>
 
     <div class = "dive_bttn">
         <button class = "dive_label">DIVE</button>
-    </div>
+        
+<style>
+    /* Initial styles for the dive button */
+    .dive_bttn {
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #607494; /* Default background color */
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+ 
+    /* Styles for the dive button when clicked */
+    .dive_bttn:active {
+        background-color:#44536e; 
+    }
+ </style>
+     </div>
 
     <div class = "table">
         <table>
