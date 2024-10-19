@@ -77,6 +77,7 @@ class MS5837(object):
         
         # Read calibration values and CRC
         for i in range(7):
+            print("in range")
             c = self._bus.read_word_data(self._MS5837_ADDR, self._MS5837_PROM_READ + 2*i)
             c =  ((c & 0xFF) << 8) | (c >> 8) # SMBus is little-endian for word transfers, we need to swap MSB and LSB
             self._C.append(c)
